@@ -1,11 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="FlexPass — One membership, 500+ gyms, yoga studios, swimming pools & more across India. Book sessions in seconds.">
+  <meta name="theme-color" content="#0A0A0F">
+  <meta property="og:title" content="FlexPass — Fitness Everywhere">
+  <meta property="og:description" content="Access 500+ fitness venues across India with one premium membership.">
+
+  <title>FlexPass — Fitness Everywhere 💪</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- FlexPass Design System -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Favicon (emoji) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 </head>
 <body>
-    <h1>fcuk</h1>
+
+  <!-- =====================================================
+       APP SHELL
+       ===================================================== -->
+  <div id="app">
+
+    <!-- TOP NAVIGATION -->
+    <nav id="top-nav" role="navigation" aria-label="Top navigation">
+      <!-- Populated by router -->
+    </nav>
+
+    <!-- MAIN CONTENT (scrollable) -->
+    <main id="app-content" role="main" aria-live="polite">
+      <!-- Page content injected here by router -->
+      <div class="page-loader">
+        <div class="spinner"></div>
+        <span>Starting FlexPass...</span>
+      </div>
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav id="bottom-nav" role="navigation" aria-label="Bottom navigation" style="display:none">
+      <!-- Populated by router -->
+    </nav>
+
+  </div><!-- /#app -->
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- =====================================================
+       DATA LAYER (must load before components)
+       ===================================================== -->
+  <script src="data/user.js"></script>
+  <script src="data/gyms.js"></script>
+  <script src="data/plans.js"></script>
+  <script src="data/workouts.js"></script>
+
+  <!-- =====================================================
+       COMPONENTS
+       ===================================================== -->
+  <script src="components/ui.js"></script>
+  <script src="components/components.js"></script>
+
+  <!-- =====================================================
+       PAGES (load order doesn't matter, all attach to FP.pages)
+       ===================================================== -->
+  <script src="pages/splash.js"></script>
+  <script src="pages/auth.js"></script>
+  <script src="pages/home.js"></script>
+  <script src="pages/explore.js"></script>
+  <script src="pages/gym-detail.js"></script>
+  <script src="pages/booking.js"></script>
+  <script src="pages/subscriptions.js"></script>
+  <script src="pages/wellness.js"></script>
+  <script src="pages/profile.js"></script>
+  <script src="pages/partner.js"></script>
+  <script src="pages/admin.js"></script>
+
+  <!-- =====================================================
+       APP BOOTSTRAP (must load last)
+       ===================================================== -->
+  <script src="app.js"></script>
+
 </body>
 </html>
