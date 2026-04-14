@@ -27,9 +27,9 @@ FP.pages.admin = {
             <div class="filter-chip ${this._tab===id?'active':''}" onclick="FP.pages.admin._setTab('${id}')">${l}</div>`).join('')}
         </div>
 
-        ${this._tab === 'overview'  ? this._renderOverview() :
-          this._tab === 'users'     ? this._renderUsers() :
-          this._tab === 'partners'  ? this._renderPartners() :
+        ${this._tab === 'overview' ? this._renderOverview() :
+          this._tab === 'members'  ? this._renderMembers() :
+          this._tab === 'partners' ? this._renderPartners() :
           this._renderContent()}
       </div>`;
   },
@@ -92,55 +92,143 @@ FP.pages.admin = {
       </div>`;
   },
 
-  _renderUsers() {
-    const users = [
-      {name:'Arjun Sharma',email:'arjun@example.com',plan:'Pro',sessions:127,joined:'Jan 2026',status:'active'},
-      {name:'Priya Mehta',email:'priya@example.com',plan:'Elite',sessions:89,joined:'Feb 2026',status:'active'},
-      {name:'Rohit Kumar',email:'rohit@example.com',plan:'Basic',sessions:23,joined:'Mar 2026',status:'active'},
-      {name:'Ananya Rao',email:'ananya@example.com',plan:'Pro',sessions:156,joined:'Dec 2025',status:'active'},
-      {name:'Vikram Singh',email:'vikram@example.com',plan:null,sessions:0,joined:'Apr 2026',status:'trial'},
-      {name:'Deepa Nair',email:'deepa@example.com',plan:'Basic',sessions:8,joined:'Apr 2026',status:'churned'},
-    ];
+  _renderMembers() {
+    const stats    = FP.data.getMemberStats();
+    const members  = FP.data.getMemberLeaderboard();
+    const maxCI    = members[0]?.checkInsMonth || 1;
+
+    const planColor = { elite: 'badge-orange', pro: 'badge-primary', basic: 'badge-success' };
+    const planLabel = { elite: 'Elite', pro: 'Pro', basic: 'Basic' };
 
     return `
       <div style="padding:0 16px">
-        <!-- User search -->
-        <div class="input-wrapper" style="margin-bottom:14px">
-          <span class="input-icon">🔍</span>
-          <input class="form-input" placeholder="Search users..." style="padding-left:44px;border-radius:999px">
+
+        <!-- Summary stats -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px">
+          ${[
+            { v: stats.total,           l: 'Members',    color: 'var(--primary)'   },
+            { v: stats.totalCheckIns,   l: 'Total CI',   color: 'var(--success)'   },
+            { v: stats.avgCheckIns,     l: 'Avg CI/Mo',  color: 'var(--warning)'   },
+            { v: stats.cities,          l: 'Cities',     color: 'var(--secondary)' },
+          ].map(s => `
+            <div class="stat-card">
+              <div class="stat-card-value" style="color:${s.color};font-size:18px">${s.v}</div>
+              <div class="stat-card-label">${s.l}</div>
+            </div>`).join('')}
         </div>
 
-        <!-- Stats row -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
-          ${[['1.84L','Total'],['94%','Active'],['18%','Trial']].map(([v,l]) => `
-            <div class="stat-card"><div class="stat-card-value text-gradient">${v}</div><div class="stat-card-label">${l}</div></div>`).join('')}
+        <!-- Plan distribution -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:16px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:10px">Plan Distribution</div>
+          <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+            ${[
+              { plan:'elite', label:'Elite', count: stats.elite, color:'var(--secondary)' },
+              { plan:'pro',   label:'Pro',   count: stats.pro,   color:'var(--primary)'   },
+              { plan:'basic', label:'Basic', count: stats.basic, color:'var(--success)'   },
+            ].map(p => `
+              <div style="text-align:center;flex:1">
+                <div style="font-size:18px;font-weight:800;color:${p.color}">${p.count}</div>
+                <div style="font-size:11px;color:var(--text-muted)">${p.label}</div>
+              </div>`).join('')}
+          </div>
+          <div style="display:flex;height:8px;border-radius:99px;overflow:hidden;gap:2px">
+            <div style="flex:${stats.elite};background:var(--secondary);border-radius:99px 0 0 99px"></div>
+            <div style="flex:${stats.pro};background:var(--primary)"></div>
+            <div style="flex:${stats.basic};background:var(--success);border-radius:0 99px 99px 0"></div>
+          </div>
         </div>
 
-        <!-- Users table -->
+        <!-- Check-ins leaderboard (top 5) -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">🏆 Check-in Leaderboard</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          ${members.slice(0,5).map((m, i) => `
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:14px">
+              <div style="width:24px;height:24px;border-radius:50%;background:${i===0?'var(--warning)':i===1?'rgba(148,163,184,0.3)':i===2?'rgba(180,100,50,0.3)':'var(--surface-2)'};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;color:${i<3?'#fff':'var(--text-muted)'}">${i+1}</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.name}</div>
+                <div style="font-size:11px;color:var(--text-secondary)">${m.gymName} · ${m.city}</div>
+              </div>
+              <div style="flex-shrink:0;text-align:right">
+                <div style="font-size:15px;font-weight:800;color:var(--primary)">${m.checkInsMonth}</div>
+                <div style="font-size:10px;color:var(--text-muted)">check-ins</div>
+              </div>
+              <div style="width:60px">
+                <div class="progress-bar" style="height:6px">
+                  <div class="progress-fill" style="width:${Math.round(m.checkInsMonth/maxCI*100)}%"></div>
+                </div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- Full members table -->
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">All Members</div>
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden">
           <table class="admin-table">
             <thead><tr>
-              <th>User</th>
+              <th>Member</th>
+              <th>Gym · City</th>
               <th>Plan</th>
-              <th>Sessions</th>
-              <th>Status</th>
+              <th style="text-align:right">CI/Mo</th>
             </tr></thead>
             <tbody>
-              ${users.map(u => `
-                <tr style="cursor:pointer" onclick="FP.Toast.info('User management coming soon!')">
+              ${members.map(m => `
+                <tr onclick="FP.pages.admin._memberDetail('${m.id}')" style="cursor:pointer">
                   <td>
-                    <div style="font-weight:600;font-size:13px">${u.name}</div>
-                    <div style="font-size:11px;color:var(--text-muted)">${u.email}</div>
+                    <div style="font-weight:600;font-size:13px">${m.name}</div>
+                    <div style="font-size:10px;color:var(--text-muted)">${m.id} · Joined ${new Date(m.joinDate).toLocaleDateString('en-IN',{month:'short',year:'numeric'})}</div>
                   </td>
-                  <td>${u.plan ? `<span class="badge ${u.plan==='Elite'?'badge-orange':u.plan==='Pro'?'badge-primary':'badge-success'}" style="font-size:10px">${u.plan}</span>` : '<span style="color:var(--text-muted);font-size:12px">None</span>'}</td>
-                  <td style="font-weight:700">${u.sessions}</td>
-                  <td><span class="badge ${u.status==='active'?'badge-success':u.status==='trial'?'badge-warning':'badge-ghost'}" style="font-size:10px">${u.status}</span></td>
+                  <td style="font-size:11px;color:var(--text-secondary)">
+                    <div>${m.gymName}</div>
+                    <div>📍 ${m.area}, ${m.city}</div>
+                  </td>
+                  <td><span class="badge ${planColor[m.plan]}" style="font-size:10px">${planLabel[m.plan]}</span></td>
+                  <td style="text-align:right;font-weight:800;color:var(--primary)">${m.checkInsMonth}</td>
                 </tr>`).join('')}
             </tbody>
           </table>
         </div>
-        <div style="text-align:center;padding:12px;font-size:12px;color:var(--text-muted)">Showing 6 of 184,293 users</div>
+        <div style="text-align:center;padding:10px;font-size:12px;color:var(--text-muted)">Sorted by check-ins · ${stats.total} members across ${stats.cities} cities</div>
       </div>`;
+  },
+
+  _memberDetail(id) {
+    const m = FP.data.members.find(x => x.id === id);
+    if (!m) return;
+    const planColor = { elite: 'var(--secondary)', pro: 'var(--primary)', basic: 'var(--success)' };
+    const html = `
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">👤 Member Profile</h3>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+        <div class="avatar avatar-lg" style="font-size:20px">${m.name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+        <div>
+          <div style="font-size:16px;font-weight:800">${m.name}</div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-top:2px">${m.gymName}</div>
+          <div style="font-size:12px;color:var(--text-secondary)">📍 ${m.area}, ${m.city}</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px">
+        <div class="stat-card">
+          <div class="stat-card-value" style="color:${planColor[m.plan]};font-size:16px">${m.plan.charAt(0).toUpperCase()+m.plan.slice(1)}</div>
+          <div class="stat-card-label">Plan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value" style="font-size:20px;color:var(--primary)">${m.checkInsMonth}</div>
+          <div class="stat-card-label">Check-ins/Mo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value" style="font-size:14px">${new Date(m.joinDate).toLocaleDateString('en-IN',{month:'short',year:'numeric'})}</div>
+          <div class="stat-card-label">Joined</div>
+        </div>
+      </div>
+      <div style="background:var(--surface-2);border-radius:12px;padding:12px;margin-bottom:18px">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:6px">MEMBER ID</div>
+        <div style="font-size:13px;font-family:monospace;color:var(--primary)">${m.id}</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm flex-1" onclick="FP.Toast.info('Email sent to member!')">📧 Email</button>
+        <button class="btn btn-primary btn-sm flex-1" onclick="FP.Modal.close()">Done</button>
+      </div>`;
+    FP.Modal.show(html);
   },
 
   _renderPartners() {
