@@ -97,10 +97,27 @@
   --text-4xl: 48px;
 
   /* Layout */
-  --app-max-width: 430px;
+  --app-max-width: 100%;
   --nav-height: 60px;
   --bottom-nav-height: 70px;
   --safe-bottom: 16px;
+
+  /* Responsive breakpoints (used as reference) */
+  --bp-mobile:  480px;
+  --bp-tablet:  768px;
+  --bp-laptop: 1024px;
+  --bp-desktop:1280px;
+
+  /* Fluid typography using clamp(min, preferred, max) */
+  --text-xs:   clamp(10px, 1.8vw,  11px);
+  --text-sm:   clamp(12px, 2vw,    13px);
+  --text-base: clamp(13px, 2.2vw,  15px);
+  --text-md:   clamp(15px, 2.5vw,  17px);
+  --text-lg:   clamp(17px, 2.8vw,  20px);
+  --text-xl:   clamp(20px, 3.2vw,  24px);
+  --text-2xl:  clamp(22px, 3.6vw,  28px);
+  --text-3xl:  clamp(28px, 4.5vw,  36px);
+  --text-4xl:  clamp(32px, 5.5vw,  48px);
 }
 
 /* ============================================================
@@ -171,7 +188,6 @@ ul, ol { list-style: none; }
   background: var(--bg);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 80px rgba(0,0,0,0.8);
 }
 
 /* Desktop decoration */
@@ -1803,11 +1819,245 @@ canvas { max-width: 100%; }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-full); }
 
 /* ============================================================
-   48. RESPONSIVE DESKTOP
+   48. FULLY RESPONSIVE SYSTEM
+   Mobile-first → Tablet → Laptop → Desktop
    ============================================================ */
-@media (min-width: 768px) {
-  :root { --app-max-width: 430px; }
-  #toast-container { max-width: 390px; }
+
+/* ── Shared: touch-friendly interactive elements ─────────── */
+button, .btn, [role="button"], .filter-chip, .auth-tab,
+.nav-item, .menu-item, .social-btn, .otp-input {
+  min-height: 44px;
+}
+.otp-input { min-height: 52px; }
+
+/* ── Mobile baseline (≤480px) ──────────────────────────────
+   All base styles above already target this range.
+   These are fixes for very small phones (320-375px).    */
+@media (max-width: 374px) {
+  #app { font-size: 14px; }
+  .otp-group { gap: 6px; }
+  .otp-input { width: 38px; height: 44px; font-size: 18px; }
+  .gym-card-image { height: 140px; }
+  .plan-card { padding: 16px 12px; }
+  .hero-section { padding: 24px 16px 20px; }
+  h1 { font-size: clamp(22px, 7vw, 26px) !important; }
+}
+
+/* ── Tablet (481–768px) ─────────────────────────────────── */
+@media (min-width: 481px) {
+  :root {
+    --nav-height: 64px;
+    --bottom-nav-height: 72px;
+  }
+
+  #app {
+    max-width: 540px;
+    margin: 0 auto;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  }
+
+  .gym-card-image { height: 180px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+
+  #toast-container { max-width: 420px; }
+}
+
+/* ── Laptop (769–1024px) ─────────────────────────────────── */
+@media (min-width: 769px) {
+  :root {
+    --nav-height: 68px;
+    --bottom-nav-height: 0px;  /* sidebar nav on large screens */
+  }
+
+  /* Body outer background for desktop chrome effect */
+  body {
+    background: #070710;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(108,71,255,0.15), transparent 55%),
+      radial-gradient(ellipse at 80% 50%, rgba(255,107,53,0.10), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Two-column app layout */
+  #app {
+    max-width: 1100px;
+    height: 96dvh;
+    border-radius: 20px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: var(--nav-height) 1fr;
+    grid-template-areas:
+      "sidebar topnav"
+      "sidebar content";
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Sidebar nav (repurposed bottom-nav) */
+  #bottom-nav {
+    grid-area: sidebar;
+    display: flex !important;
+    flex-direction: column;
+    height: 100%;
+    width: 240px;
+    border-top: none;
+    border-right: 1px solid var(--border);
+    padding: 80px 12px 24px;
+    justify-content: flex-start;
+    gap: 4px;
+    align-items: stretch;
+    background: var(--surface);
+  }
+
+  #bottom-nav .nav-item {
+    flex-direction: row;
+    min-width: 0;
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    gap: 12px;
+    justify-content: flex-start;
+    height: auto;
+    width: 100%;
+  }
+
+  #bottom-nav .nav-item .nav-label {
+    display: block !important;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  #bottom-nav .nav-item.active {
+    background: rgba(108,71,255,0.12);
+    color: var(--primary);
+  }
+
+  #bottom-nav .nav-item .nav-icon {
+    font-size: 18px;
+    width: 22px;
+    text-align: center;
+  }
+
+  /* Sidebar brand logo at top */
+  #bottom-nav::before {
+    content: '⚡ FlexPass';
+    position: absolute;
+    top: 24px;
+    left: 20px;
+    font-size: 17px;
+    font-weight: 900;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    pointer-events: none;
+  }
+
+  /* Top nav now just a header bar for content area */
+  #top-nav {
+    grid-area: topnav;
+    border-bottom: 1px solid var(--border);
+    border-left: none;
+  }
+
+  /* Content fills remaining space */
+  #app-content {
+    grid-area: content;
+  }
+
+  /* Cards adapt to wider content area */
+  .gym-card-image { height: 200px; }
+
+  /* Hero sections get more breathing room */
+  .hero-section {
+    padding: 40px 32px 32px;
+  }
+
+  /* Sidebar adds spacer at bottom to push items up */
+  #bottom-nav::after {
+    content: '';
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Toast in top-right corner on desktop */
+  #toast-container {
+    top: 24px;
+    bottom: auto;
+    right: 24px;
+    left: auto;
+    max-width: 380px;
+  }
+
+  /* Auth / splash pages span full width even in grid */
+  .page-full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* Tables get more comfortable */
+  .admin-table th,
+  .admin-table td { padding: 14px 16px; font-size: 13px; }
+
+  /* Explore grid becomes 2-col on desktop */
+  .gym-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+/* ── Desktop (1025px+) ──────────────────────────────────── */
+@media (min-width: 1025px) {
+  #app {
+    max-width: 1200px;
+    grid-template-columns: 260px 1fr;
+  }
+
+  #bottom-nav {
+    width: 260px;
+    padding: 80px 16px 28px;
+  }
+
+  #bottom-nav .nav-item { padding: 13px 18px; }
+
+  .gym-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gym-card-image { height: 220px; }
+}
+
+/* ── Wide Desktop (1281px+) ─────────────────────────────── */
+@media (min-width: 1281px) {
+  #app { max-width: 1340px; }
+}
+
+/* ── Splash / Auth: always full-width (no sidebar) ──────── */
+@media (min-width: 769px) {
+  .auth-layout-wrap,
+  .splash-layout-wrap {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Auth card floats centered in wide layout */
+  .page-enter[data-page="auth"],
+  .page-enter[data-page="splash"] {
+    max-width: 440px;
+    margin: 0 auto;
+  }
 }
 
 /* ============================================================
@@ -1827,3 +2077,199 @@ canvas { max-width: 100%; }
 .grid-2.gap-md { gap: var(--space-md); }
 .overflow-y-auto { overflow-y: auto; }
 .shrink-0 { flex-shrink: 0; }
+
+/* ============================================================
+   50. ACCESSIBILITY (A11Y)
+   WCAG 2.1 AA compliance
+   ============================================================ */
+
+/* ── Skip navigation link ──────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 16px;
+  z-index: 99999;
+  padding: 10px 20px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  text-decoration: none;
+  transition: top var(--ease-fast);
+  box-shadow: var(--shadow-md);
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--warning);
+  outline-offset: 2px;
+}
+
+/* ── Keyboard focus rings ───────────────────────────────── */
+/* Remove default ugly focus ring everywhere */
+*:focus { outline: none; }
+
+/* Restore visible focus for keyboard users only */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+button:focus-visible,
+.btn:focus-visible       { outline-offset: 4px; }
+input:focus-visible,
+textarea:focus-visible   { outline-offset: 0; border-color: var(--primary) !important; }
+a:focus-visible          { outline-offset: 4px; border-radius: 2px; }
+
+/* ── Color contrast helpers ─────────────────────────────── */
+/* Ensures muted text meets 3:1 ratio on dark background */
+.text-accessible-muted { color: #7A7A9A; } /* #7A7A9A on #0A0A0F = 4.6:1 */
+
+/* ── Screen reader utilities ────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.not-sr-only {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ── Reduce motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .spinner { animation: none; border: 3px solid var(--primary); }
+}
+
+/* ── High Contrast Mode ─────────────────────────────────── */
+@media (forced-colors: active) {
+  .btn-primary    { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .badge          { forced-color-adjust: none; }
+  .gym-card       { border: 2px solid ButtonText; }
+}
+
+/* ── Touch / pointer ────────────────────────────────────── */
+@media (pointer: coarse) {
+  /* Enlarge all small touch targets on touch devices */
+  .filter-chip  { min-height: 44px; padding: 10px 16px; }
+  .nav-item     { min-height: 50px; }
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
+
+/* ── Print styles ───────────────────────────────────────── */
+@media print {
+  #top-nav, #bottom-nav, #toast-container,
+  .skip-link, .btn, .modal-overlay { display: none !important; }
+  #app { max-width: 100%; height: auto; overflow: visible; box-shadow: none; }
+  #app-content { overflow: visible; }
+  body { background: #fff !important; color: #000 !important; }
+  a[href]::after { content: ' (' attr(href) ')'; font-size: 12px; color: #555; }
+}
+
+/* ============================================================
+   51. PERFORMANCE — Image lazy loading defaults
+   ============================================================ */
+img[loading="lazy"] {
+  /* Prevent layout shift before load */
+  background: var(--surface-2);
+  object-fit: cover;
+}
+
+/* Responsive images */
+img, video, iframe, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Aspect ratio boxes to prevent CLS */
+.aspect-16-9  { aspect-ratio: 16/9; }
+.aspect-4-3   { aspect-ratio: 4/3; }
+.aspect-1-1   { aspect-ratio: 1; }
+.aspect-gym   { aspect-ratio: 4/3; }
+
+/* ============================================================
+   52. PWA — Install prompt & offline indicator
+   ============================================================ */
+#pwa-install-banner {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + 12px);
+  left: 12px;
+  right: 12px;
+  z-index: 9000;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.4s var(--ease-bounce) both;
+}
+
+#offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99998;
+  background: var(--warning);
+  color: var(--text-inverse);
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  transform: translateY(-100%);
+  transition: transform var(--ease-normal);
+}
+#offline-banner.show { transform: translateY(0); }
+
+/* ============================================================
+   53. CROSS-BROWSER COMPATIBILITY FIXES
+   ============================================================ */
+/* Safe area insets (iPhone notch / Dynamic Island) */
+#top-nav    { padding-top: env(safe-area-inset-top, 0); }
+#bottom-nav { padding-bottom: env(safe-area-inset-bottom, 16px); }
+
+/* Firefox: scrollbar styling */
+* { scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+
+/* Safari: momentum scrolling */
+#app-content { -webkit-overflow-scrolling: touch; }
+
+/* Edge/IE: remove clear button on inputs */
+input::-ms-clear  { display: none; }
+input::-ms-reveal { display: none; }
+
+/* Chrome: autofill background fix */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--text);
+}
+

@@ -3,30 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="FlexPass — One membership, 500+ gyms, yoga studios, swimming pools & more across India. Book sessions in seconds.">
-  <meta name="theme-color" content="#0A0A0F">
-  <meta property="og:title" content="FlexPass — Fitness Everywhere">
-  <meta property="og:description" content="Access 500+ fitness venues across India with one premium membership.">
 
+  <!-- ── Primary Meta ───────────────────────────────────── -->
   <title>FlexPass — Fitness Everywhere 💪</title>
+  <meta name="description" content="FlexPass — One membership, 500+ gyms, yoga studios, swimming pools & wellness centres across India. Book sessions in seconds.">
+  <meta name="keywords" content="gym membership, fitness app, yoga studio, wellness, FlexPass, FITPASS alternative, India fitness">
+  <meta name="author" content="FlexPass Technologies Pvt. Ltd.">
+  <meta name="robots" content="index, follow">
 
-  <!-- Google Fonts -->
+  <!-- ── PWA / App Meta ─────────────────────────────────── -->
+  <meta name="application-name" content="FlexPass">
+  <meta name="theme-color" content="#6C47FF" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#6C47FF" media="(prefers-color-scheme: light)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FlexPass">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- ── Open Graph (Social Sharing) ───────────────────── -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://flexpass.in/">
+  <meta property="og:title"       content="FlexPass — Fitness Everywhere">
+  <meta property="og:description" content="Access 500+ fitness venues across India with one premium membership.">
+  <meta property="og:image"       content="https://flexpass.in/og-image.jpg">
+  <meta property="og:locale"      content="en_IN">
+  <meta property="og:site_name"   content="FlexPass">
+
+  <!-- ── Twitter Card ──────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:site"        content="@FlexPassIN">
+  <meta name="twitter:title"       content="FlexPass — Fitness Everywhere">
+  <meta name="twitter:description" content="Access 500+ fitness venues across India with one premium membership.">
+  <meta name="twitter:image"       content="https://flexpass.in/og-image.jpg">
+
+  <!-- ── Canonical ─────────────────────────────────────── -->
+  <link rel="canonical" href="https://flexpass.in/">
+
+  <!-- ── PWA Manifest ──────────────────────────────────── -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- ── Favicons ──────────────────────────────────────── -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%236C47FF'/><text y='.85em' x='.1em' font-size='85'>⚡</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%236C47FF'/><text y='.85em' x='.05em' font-size='155'>⚡</text></svg>">
+
+  <!-- ── Performance hints ─────────────────────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 
-  <!-- FlexPass Design System -->
+  <!-- ── Google Fonts (display=swap for performance) ───── -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+  <!-- ── FlexPass Design System ────────────────────────── -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Favicon (emoji) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <!-- ── Structured Data (JSON-LD) ─────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "FlexPass",
+    "description": "One membership for 500+ gyms, yoga studios and wellness centres across India.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Android, iOS, Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "799",
+      "priceCurrency": "INR"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "FlexPass Technologies Pvt. Ltd.",
+      "url": "https://flexpass.in"
+    }
+  }
+  </script>
 </head>
 <body>
 
   <!-- =====================================================
        APP SHELL
        ===================================================== -->
-  <div id="app">
+  <div id="app" role="application" aria-label="FlexPass Fitness App">
 
     <!-- TOP NAVIGATION -->
     <nav id="top-nav" role="navigation" aria-label="Top navigation">
@@ -34,23 +93,26 @@
     </nav>
 
     <!-- MAIN CONTENT (scrollable) -->
-    <main id="app-content" role="main" aria-live="polite">
-      <!-- Page content injected here by router -->
-      <div class="page-loader">
-        <div class="spinner"></div>
+    <main id="app-content" role="main" aria-live="polite" aria-atomic="false">
+      <!-- Loading state — replaced by router on init -->
+      <div class="page-loader" role="status" aria-label="Loading FlexPass">
+        <div class="spinner" aria-hidden="true"></div>
         <span>Starting FlexPass...</span>
       </div>
     </main>
 
-    <!-- BOTTOM NAVIGATION -->
-    <nav id="bottom-nav" role="navigation" aria-label="Bottom navigation" style="display:none">
+    <!-- BOTTOM NAVIGATION (becomes sidebar on desktop) -->
+    <nav id="bottom-nav" role="navigation" aria-label="Main navigation" style="display:none">
       <!-- Populated by router -->
     </nav>
 
   </div><!-- /#app -->
 
   <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+  <div id="toast-container" role="status" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- SKIP TO CONTENT (accessibility) -->
+  <a href="#app-content" class="skip-link" tabindex="0">Skip to main content</a>
 
   <!-- =====================================================
        DATA LAYER (must load before components)
@@ -67,7 +129,7 @@
   <script src="components/components.js"></script>
 
   <!-- =====================================================
-       PAGES (load order doesn't matter, all attach to FP.pages)
+       PAGES
        ===================================================== -->
   <script src="pages/splash.js"></script>
   <script src="pages/auth.js"></script>
@@ -82,11 +144,27 @@
   <script src="pages/admin.js"></script>
   <script src="pages/legal.js"></script>
 
-
   <!-- =====================================================
        APP BOOTSTRAP (must load last)
        ===================================================== -->
   <script src="app.js"></script>
+
+  <!-- =====================================================
+       SERVICE WORKER REGISTRATION
+       ===================================================== -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then(reg => {
+            console.log('[FlexPass] Service worker registered:', reg.scope);
+            /* Check for updates every 30 min */
+            setInterval(() => reg.update(), 30 * 60 * 1000);
+          })
+          .catch(err => console.warn('[FlexPass] SW registration failed:', err));
+      });
+    }
+  </script>
 
 </body>
 </html>
