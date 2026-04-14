@@ -1821,3 +1821,9 @@ canvas { max-width: 100%; }
 .cursor-pointer { cursor: pointer; }
 .select-none { user-select: none; }
 .transition { transition: all var(--ease-normal); }
+.min-width-0 { min-width: 0; }
+.gap-md { gap: var(--space-md); }
+.mb-md { margin-bottom: var(--space-md); }
+.grid-2.gap-md { gap: var(--space-md); }
+.overflow-y-auto { overflow-y: auto; }
+.shrink-0 { flex-shrink: 0; }
