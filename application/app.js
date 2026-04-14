@@ -20,21 +20,24 @@ FP.Router = {
   mainPages: ['home', 'explore', 'bookings', 'wellness', 'profile'],
 
   /* Pages that show back button in top nav */
-  detailPages: ['gym-detail', 'subscriptions', 'partner', 'admin'],
+  detailPages: ['gym-detail', 'subscriptions', 'partner', 'admin', 'privacy-policy', 'terms-of-service', 'cookie-policy'],
 
   /* Nav config per page */
   navConfig: {
-    splash:        { show: false },
-    auth:          { show: false },
-    home:          { showLogo: true, showNotif: true, showTheme: true },
-    explore:       { title: 'Explore', showTheme: true },
-    bookings:      { title: 'My Bookings' },
-    wellness:      { title: 'Wellness' },
-    profile:       { title: 'Profile', showTheme: true },
-    'gym-detail':  { showBack: true, title: '' },
-    subscriptions: { showBack: true, title: 'Choose Plan' },
-    partner:       { showBack: true, title: 'Partner Portal' },
-    admin:         { showBack: true, title: 'Admin' },
+    splash:           { show: false },
+    auth:             { show: false },
+    home:             { showLogo: true, showNotif: true, showTheme: true },
+    explore:          { title: 'Explore', showTheme: true },
+    bookings:         { title: 'My Bookings' },
+    wellness:         { title: 'Wellness' },
+    profile:          { title: 'Profile', showTheme: true },
+    'gym-detail':     { showBack: true, title: '' },
+    subscriptions:    { showBack: true, title: 'Choose Plan' },
+    partner:          { showBack: true, title: 'Partner Portal' },
+    admin:            { showBack: true, title: 'Admin' },
+    'privacy-policy': { showBack: true, title: 'Privacy Policy' },
+    'terms-of-service':{ showBack: true, title: 'Terms of Service' },
+    'cookie-policy':  { showBack: true, title: 'Cookie Policy' },
   },
 
   go(page, params = {}) {
@@ -98,7 +101,7 @@ FP.Router = {
   /* Parse hash and route */
   fromHash() {
     const hash = window.location.hash.replace('#', '').trim();
-    const validPages = ['splash','auth','home','explore','bookings','wellness','profile','gym-detail','subscriptions','partner','admin'];
+    const validPages = ['splash','auth','home','explore','bookings','wellness','profile','gym-detail','subscriptions','partner','admin','privacy-policy','terms-of-service','cookie-policy'];
     const page = validPages.includes(hash) ? hash : 'splash';
     this.go(page, FP.state.params || {});
   },
@@ -130,6 +133,9 @@ FP.init = function() {
 
   /* Navigate to start page */
   FP.Router.go(startPage);
+
+  /* Initialize cookie consent (shows banner on first visit) */
+  FP.CookieConsent.init();
 
   /* Handle hash changes (browser back/forward) */
   window.addEventListener('hashchange', () => {

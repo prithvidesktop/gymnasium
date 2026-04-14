@@ -141,6 +141,12 @@ FP.pages.profile = {
         </div>
 
         <div style="text-align:center;padding:8px;font-size:11px;color:var(--text-muted)">FlexPass v1.0 · Made with ❤️ in India</div>
+        <div style="display:flex;justify-content:center;gap:16px;padding:4px 0 8px;flex-wrap:wrap">
+          <span onclick="FP.Router.go('privacy-policy')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline">Privacy Policy</span>
+          <span onclick="FP.Router.go('terms-of-service')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline">Terms of Service</span>
+          <span onclick="FP.Router.go('cookie-policy')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline">Cookie Policy</span>
+          <span onclick="FP.CookieConsent.openPreferences()" style="font-size:11px;color:var(--primary);cursor:pointer;font-weight:600">🍪 Manage Cookies</span>
+        </div>
       </div>`;
   },
 
