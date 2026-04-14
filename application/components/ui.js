@@ -1,5 +1,5 @@
 /* ============================================================
-   FLEXPASS — COMPONENTS: Toast, Loader, Modal
+   FLEXPASS — COMPONENTS: Toast, Loader, Modal, PWA, Network
    ============================================================ */
 window.FP = window.FP || {};
 
@@ -20,7 +20,8 @@ FP.Toast = {
     const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
     const el = document.createElement('div');
     el.className = `toast toast-${type}`;
-    el.innerHTML = `<span class="toast-icon">${icons[type]}</span><span class="toast-msg">${msg}</span>`;
+    el.setAttribute('role', 'status');
+    el.innerHTML = `<span class="toast-icon" aria-hidden="true">${icons[type]}</span><span class="toast-msg">${msg}</span>`;
     this.container.appendChild(el);
     setTimeout(() => {
       el.classList.add('removing');
@@ -41,20 +42,20 @@ FP.Loader = {
   show(container = '#app-content') {
     const el = document.querySelector(container);
     if (el) el.innerHTML = `
-      <div class="page-loader page-enter">
-        <div class="spinner"></div>
+      <div class="page-loader page-enter" role="status" aria-label="Loading">
+        <div class="spinner" aria-hidden="true"></div>
         <span>Loading...</span>
       </div>`;
   },
 
   pageLoader() {
-    return `<div class="page-loader"><div class="spinner"></div><span>Loading...</span></div>`;
+    return `<div class="page-loader" role="status"><div class="spinner" aria-hidden="true"></div><span>Loading...</span></div>`;
   },
 
   skeletonCard() {
     return `
-      <div class="gym-card" style="padding:0">
-        <div class="skeleton" style="height:160px;border-radius:0"></div>
+      <div class="gym-card" style="padding:0" aria-hidden="true">
+        <div class="skeleton" style="aspect-ratio:4/3;border-radius:0"></div>
         <div style="padding:16px;display:flex;flex-direction:column;gap:8px">
           <div class="skeleton" style="height:18px;width:70%"></div>
           <div class="skeleton" style="height:13px;width:50%"></div>
@@ -75,14 +76,21 @@ FP.Modal = {
     const overlay = document.createElement('div');
     overlay.className = 'modal-overlay' + (opts.center ? ' modal-center' : '');
     overlay.id = 'fp-modal-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
     overlay.innerHTML = `
       <div class="modal-sheet" id="fp-modal-sheet">
-        ${opts.noHandle ? '' : '<div class="modal-handle"></div>'}
+        ${opts.noHandle ? '' : '<div class="modal-handle" aria-hidden="true"></div>'}
         ${html}
       </div>`;
 
     document.body.appendChild(overlay);
     this._active = overlay;
+
+    /* Trap focus & close on Escape */
+    overlay.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') this.close();
+    });
 
     /* Animate in */
     requestAnimationFrame(() => {
@@ -93,6 +101,12 @@ FP.Modal = {
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) this.close();
     });
+
+    /* Focus first focusable element inside modal */
+    setTimeout(() => {
+      const focusable = overlay.querySelector('button, input, [tabindex]:not([tabindex="-1"])');
+      if (focusable) focusable.focus();
+    }, 350);
 
     return overlay;
   },
@@ -137,11 +151,9 @@ FP.CookieConsent = {
   init() {
     const saved = localStorage.getItem(this.STORAGE_KEY);
     if (saved) {
-      /* Already consented — silently restore prefs */
       try { Object.assign(this._prefs, JSON.parse(saved)); } catch (_) {}
       return;
     }
-    /* First visit — show banner after a short delay */
     setTimeout(() => this._showBanner(), 1200);
   },
 
@@ -172,25 +184,26 @@ FP.CookieConsent = {
     banner.id = 'fp-cookie-banner';
     banner.setAttribute('role', 'dialog');
     banner.setAttribute('aria-label', 'Cookie consent');
+    banner.setAttribute('aria-live', 'polite');
     banner.innerHTML = `
       <div style="
         position:fixed;bottom:0;left:0;right:0;z-index:9999;
         background:var(--surface);border-top:1px solid var(--border);
         padding:16px 20px 20px;
         box-shadow:0 -8px 40px rgba(0,0,0,0.35);
-        animation:slideUp 0.4s var(--ease-spring) both;
+        animation:slideUp 0.4s var(--ease-bounce) both;
         max-width:100%;
       " id="fp-cookie-inner">
 
         <!-- Top row -->
         <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:14px">
-          <div style="font-size:28px;flex-shrink:0">🍪</div>
+          <div style="font-size:28px;flex-shrink:0" aria-hidden="true">🍪</div>
           <div style="flex:1">
             <div style="font-size:15px;font-weight:800;margin-bottom:4px">We use cookies</div>
             <p style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0">
               FlexPass uses cookies to improve your experience, personalize recommendations, and analyze app usage.
               By clicking <strong>"Accept All"</strong>, you consent to our use of all cookies.
-              <span onclick="FP.Router.go('cookie-policy')" style="color:var(--primary);cursor:pointer;font-weight:600">Cookie Policy</span>
+              <span onclick="FP.Router.go('cookie-policy')" style="color:var(--primary);cursor:pointer;font-weight:600" tabindex="0" role="link">Cookie Policy</span>
             </p>
           </div>
         </div>
@@ -207,7 +220,7 @@ FP.CookieConsent = {
               <span style="font-size:12px;color:var(--text-secondary)">${c.label}</span>
               ${c.locked
                 ? `<span style="font-size:10px;color:var(--success);font-weight:700">Always ✓</span>`
-                : `<label style="position:relative;display:inline-block;width:36px;height:20px;cursor:pointer">
+                : `<label style="position:relative;display:inline-block;width:36px;height:20px;cursor:pointer" aria-label="Toggle ${c.label} cookies">
                      <input type="checkbox" id="cc-${c.id}" style="opacity:0;width:0;height:0" onchange="FP.CookieConsent._onToggle()">
                      <span style="position:absolute;inset:0;background:var(--border-strong);border-radius:99px;transition:all 0.2s" id="cc-track-${c.id}"></span>
                      <span style="position:absolute;bottom:2px;left:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.3)" id="cc-thumb-${c.id}"></span>
@@ -218,24 +231,24 @@ FP.CookieConsent = {
         <!-- Action buttons -->
         <div style="display:flex;gap:8px">
           <button onclick="FP.CookieConsent.essentialOnly()"
-            style="flex:1;padding:12px 8px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text-secondary);font-size:13px;font-weight:600;cursor:pointer">
+            style="flex:1;padding:12px 8px;min-height:44px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text-secondary);font-size:13px;font-weight:600;cursor:pointer">
             Essential Only
           </button>
           <button onclick="FP.CookieConsent._saveCustom()"
-            style="flex:1;padding:12px 8px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text);font-size:13px;font-weight:600;cursor:pointer">
+            style="flex:1;padding:12px 8px;min-height:44px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--text);font-size:13px;font-weight:600;cursor:pointer">
             Save Custom
           </button>
           <button onclick="FP.CookieConsent.acceptAll()"
-            style="flex:1.5;padding:12px 8px;border-radius:12px;border:none;background:var(--gradient-primary);color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary)">
+            style="flex:1.5;padding:12px 8px;min-height:44px;border-radius:12px;border:none;background:var(--gradient-primary);color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary)">
             Accept All ✓
           </button>
         </div>
 
         <!-- Legal links -->
         <div style="display:flex;justify-content:center;gap:16px;margin-top:12px">
-          <span onclick="FP.Router.go('privacy-policy')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline">Privacy Policy</span>
-          <span onclick="FP.Router.go('terms-of-service')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline">Terms of Service</span>
-          <span onclick="FP.Router.go('cookie-policy')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline">Cookie Policy</span>
+          <span onclick="FP.Router.go('privacy-policy')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline" tabindex="0" role="link">Privacy Policy</span>
+          <span onclick="FP.Router.go('terms-of-service')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline" tabindex="0" role="link">Terms of Service</span>
+          <span onclick="FP.Router.go('cookie-policy')" style="font-size:11px;color:var(--text-muted);cursor:pointer;text-decoration:underline" tabindex="0" role="link">Cookie Policy</span>
         </div>
       </div>`;
 
@@ -243,7 +256,6 @@ FP.CookieConsent = {
   },
 
   _onToggle() {
-    /* Update toggle visuals */
     ['functional','analytics','marketing'].forEach(id => {
       const cb    = document.getElementById(`cc-${id}`);
       const track = document.getElementById(`cc-track-${id}`);
@@ -273,15 +285,100 @@ FP.CookieConsent = {
     }
   },
 
-  /* Expose current preferences for use by other modules */
   get(key) {
     return key ? this._prefs[key] : { ...this._prefs };
   },
 
-  /* Allow user to re-open preferences from Settings */
   openPreferences() {
     localStorage.removeItem(this.STORAGE_KEY);
     this._showBanner();
   },
 };
 
+/* ============================================================
+   NETWORK — Online / Offline detection
+   ============================================================ */
+FP.Network = {
+  _banner: null,
+
+  init() {
+    this._banner = document.getElementById('offline-banner');
+    window.addEventListener('online',  () => this._onOnline());
+    window.addEventListener('offline', () => this._onOffline());
+    /* Check initial state */
+    if (!navigator.onLine) this._onOffline();
+  },
+
+  _onOnline() {
+    if (this._banner) this._banner.classList.remove('show');
+    FP.Toast.success('Back online! 🌐');
+  },
+
+  _onOffline() {
+    if (this._banner) this._banner.classList.add('show');
+    FP.Toast.warning('You are offline. Some features may be unavailable.');
+  },
+};
+
+/* ============================================================
+   PWA — Install prompt handler
+   ============================================================ */
+FP.PWA = {
+  _deferredPrompt: null,
+  _dismissed: false,
+
+  init() {
+    /* Check if already installed or dismissed */
+    if (localStorage.getItem('fp_pwa_dismissed')) return;
+    if (window.matchMedia('(display-mode: standalone)').matches) return;
+
+    /* Capture the install prompt */
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      this._deferredPrompt = e;
+      /* Show banner after a small delay for better UX */
+      setTimeout(() => this._showBanner(), 3000);
+    });
+
+    /* Handle install success */
+    window.addEventListener('appinstalled', () => {
+      this._hideBanner();
+      FP.Toast.success('FlexPass installed! Find it on your home screen. 🎉');
+      this._deferredPrompt = null;
+    });
+
+    /* Wire up install/dismiss buttons */
+    const installBtn  = document.getElementById('pwa-install-btn');
+    const dismissBtn  = document.getElementById('pwa-dismiss-btn');
+    if (installBtn) installBtn.addEventListener('click', () => this.install());
+    if (dismissBtn) dismissBtn.addEventListener('click', () => this._dismiss());
+  },
+
+  _showBanner() {
+    if (this._dismissed || !this._deferredPrompt) return;
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.add('show');
+  },
+
+  _hideBanner() {
+    const banner = document.getElementById('pwa-install-banner');
+    if (banner) banner.classList.remove('show');
+  },
+
+  _dismiss() {
+    this._dismissed = true;
+    localStorage.setItem('fp_pwa_dismissed', '1');
+    this._hideBanner();
+  },
+
+  async install() {
+    if (!this._deferredPrompt) return;
+    this._deferredPrompt.prompt();
+    const { outcome } = await this._deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      FP.Toast.success('Installing FlexPass...');
+    }
+    this._deferredPrompt = null;
+    this._hideBanner();
+  },
+};

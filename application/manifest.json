@@ -1,32 +1,45 @@
 {
+  "id": "flexpass-fitness-app",
   "name": "FlexPass — Fitness Everywhere",
   "short_name": "FlexPass",
   "description": "One membership. 500+ gyms, yoga studios, swimming pools & wellness centres across India.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
   "background_color": "#0A0A0F",
   "theme_color": "#6C47FF",
   "lang": "en-IN",
-  "scope": "/",
+  "scope": "./",
   "categories": ["health", "fitness", "lifestyle"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%236C47FF'/><text y='130' x='96' font-size='110' text-anchor='middle' font-family='Arial'>⚡</text></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%236C47FF'/><text y='360' x='256' font-size='300' text-anchor='middle' font-family='Arial'>⚡</text></svg>",
       "sizes": "512x512",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%236C47FF'/><text y='130' x='96' font-size='110' text-anchor='middle' font-family='Arial'>⚡</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ],
   "screenshots": [
     {
       "label": "FlexPass Home Dashboard",
+      "form_factor": "narrow"
+    },
+    {
+      "label": "FlexPass Explore Gyms",
       "form_factor": "narrow"
     }
   ],
@@ -34,14 +47,21 @@
     {
       "name": "Explore Gyms",
       "short_name": "Explore",
-      "url": "/#explore",
+      "url": "./#explore",
       "description": "Browse gyms and studios near you"
     },
     {
       "name": "My Bookings",
       "short_name": "Bookings",
-      "url": "/#bookings",
+      "url": "./#bookings",
       "description": "View upcoming sessions and QR codes"
+    },
+    {
+      "name": "Wellness",
+      "short_name": "Wellness",
+      "url": "./#wellness",
+      "description": "AI workout plans and wellness content"
     }
-  ]
+  ],
+  "related_applications": []
 }

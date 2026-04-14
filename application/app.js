@@ -137,6 +137,12 @@ FP.init = function() {
   /* Initialize cookie consent (shows banner on first visit) */
   FP.CookieConsent.init();
 
+  /* Initialize network detection (online/offline banner) */
+  if (FP.Network) FP.Network.init();
+
+  /* Initialize PWA install prompt */
+  if (FP.PWA) FP.PWA.init();
+
   /* Handle hash changes (browser back/forward) */
   window.addEventListener('hashchange', () => {
     const newHash = window.location.hash.replace('#', '').trim();

@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
 
   <!-- ── Primary Meta ───────────────────────────────────── -->
   <title>FlexPass — Fitness Everywhere 💪</title>
-  <meta name="description" content="FlexPass — One membership, 500+ gyms, yoga studios, swimming pools & wellness centres across India. Book sessions in seconds.">
+  <meta name="description" content="FlexPass — One membership, 500+ gyms, yoga studios, swimming pools &amp; wellness centres across India. Book sessions in seconds.">
   <meta name="keywords" content="gym membership, fitness app, yoga studio, wellness, FlexPass, FITPASS alternative, India fitness">
   <meta name="author" content="FlexPass Technologies Pvt. Ltd.">
   <meta name="robots" content="index, follow">
@@ -55,6 +56,9 @@
   <!-- ── Google Fonts (display=swap for performance) ───── -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
+  <!-- ── Preload critical stylesheet ──────────────────── -->
+  <link rel="preload" href="style.css" as="style">
+
   <!-- ── FlexPass Design System ────────────────────────── -->
   <link rel="stylesheet" href="style.css">
 
@@ -81,6 +85,9 @@
   </script>
 </head>
 <body>
+
+  <!-- SKIP TO CONTENT (accessibility) — must be first in body -->
+  <a href="#app-content" class="skip-link" tabindex="0">Skip to main content</a>
 
   <!-- =====================================================
        APP SHELL
@@ -111,8 +118,22 @@
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toast-container" role="status" aria-live="assertive" aria-atomic="true"></div>
 
-  <!-- SKIP TO CONTENT (accessibility) -->
-  <a href="#app-content" class="skip-link" tabindex="0">Skip to main content</a>
+  <!-- OFFLINE BANNER -->
+  <div id="offline-banner" role="alert" aria-live="assertive">
+    📵 You're offline — some features may be unavailable
+  </div>
+
+  <!-- PWA INSTALL BANNER -->
+  <div id="pwa-install-banner" role="complementary" aria-label="Install FlexPass app">
+    <span style="font-size:28px;flex-shrink:0">⚡</span>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:13px;font-weight:700">Install FlexPass</div>
+      <div style="font-size:11px;color:var(--text-secondary)">Add to Home Screen for the best experience</div>
+    </div>
+    <button id="pwa-install-btn" class="btn btn-primary btn-sm" style="flex-shrink:0">Install</button>
+    <button id="pwa-dismiss-btn" aria-label="Dismiss install prompt"
+      style="background:none;border:none;color:var(--text-muted);padding:4px;cursor:pointer;font-size:18px;flex-shrink:0">✕</button>
+  </div>
 
   <!-- =====================================================
        DATA LAYER (must load before components)
@@ -155,7 +176,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
           .then(reg => {
             console.log('[FlexPass] Service worker registered:', reg.scope);
             /* Check for updates every 30 min */

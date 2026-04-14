@@ -139,40 +139,42 @@ FP.pages.auth = {
     const lock = FP.Auth.checkLock('login');
 
     return `
-      <div style="min-height:100%;display:flex;flex-direction:column;background:var(--bg-gradient);padding:20px 24px 32px;overflow-y:auto">
+      <div style="min-height:100%;display:flex;flex-direction:column;align-items:center;background:var(--bg-gradient);padding:20px 24px 32px;overflow-y:auto">
 
-        <!-- Logo -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
-          <div class="nav-logo-icon" style="width:34px;height:34px;font-size:16px">F</div>
-          <span class="nav-logo-text" style="font-size:19px">FlexPass</span>
-        </div>
+        <div class="auth-card" style="width:100%;max-width:440px">
+          <!-- Logo -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
+            <div class="nav-logo-icon" style="width:34px;height:34px;font-size:16px" aria-hidden="true">F</div>
+            <span class="nav-logo-text" style="font-size:19px" aria-label="FlexPass">FlexPass</span>
+          </div>
 
-        <div class="page-enter">
-          ${this._renderHeading()}
+          <div class="page-enter">
+            ${this._renderHeading()}
 
-          ${lock.locked ? this._renderLockout(lock.unlocksIn) : this._renderFlow()}
+            ${lock.locked ? this._renderLockout(lock.unlocksIn) : this._renderFlow()}
 
-          <!-- Terms -->
-          <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:18px;line-height:1.6">
-            By continuing, you agree to FlexPass's
-            <span style="color:var(--primary);cursor:pointer" onclick="FP.Router.go('terms-of-service')">Terms of Service</span> and
-            <span style="color:var(--primary);cursor:pointer" onclick="FP.Router.go('privacy-policy')">Privacy Policy</span>.
-          </p>
+            <!-- Terms -->
+            <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:18px;line-height:1.6">
+              By continuing, you agree to FlexPass's
+              <span style="color:var(--primary);cursor:pointer" onclick="FP.Router.go('terms-of-service')" role="link" tabindex="0">Terms of Service</span> and
+              <span style="color:var(--primary);cursor:pointer" onclick="FP.Router.go('privacy-policy')" role="link" tabindex="0">Privacy Policy</span>.
+            </p>
+          </div>
         </div>
       </div>`;
   },
 
   _renderHeading() {
     const headings = {
-      'login':        { h:'Welcome\nBack! 👋',        sub:'Sign in to continue your fitness journey.' },
-      'signup':       { h:'Join the\nRevolution 🚀',  sub:'Start your free trial. No credit card needed.' },
-      'forgot':       { h:'Reset\nPassword 🔑',       sub:'Enter your email and we\'ll send a reset code.' },
-      'reset':        { h:'New Password\n🔒',          sub:'Set a strong new password for your account.' },
-      'verify-email': { h:'Check Your\nInbox 📬',     sub: `We sent a 6-digit code to ${this._verifyTarget}` },
+      'login':        { h:'Welcome Back! 👋',        sub:'Sign in to continue your fitness journey.' },
+      'signup':       { h:'Join the Revolution 🚀',  sub:'Start your free trial. No credit card needed.' },
+      'forgot':       { h:'Reset Password 🔑',       sub:'Enter your email and we\'ll send a reset code.' },
+      'reset':        { h:'New Password 🔒',          sub:'Set a strong new password for your account.' },
+      'verify-email': { h:'Check Your Inbox 📬',     sub: `We sent a 6-digit code to ${this._verifyTarget}` },
     };
     const { h, sub } = headings[this._mode] || headings['login'];
     return `
-      <h1 style="font-size:26px;font-weight:900;line-height:1.25;margin-bottom:8px;white-space:pre-line">${h}</h1>
+      <h1 style="font-size:clamp(22px,5vw,28px);font-weight:900;line-height:1.25;margin-bottom:8px">${h}</h1>
       <p style="font-size:13px;color:var(--text-secondary);margin-bottom:22px;line-height:1.6">${sub}</p>`;
   },
 
@@ -235,10 +237,12 @@ FP.pages.auth = {
           </div>
         </div>` : ''}
       <div class="form-group">
-        <label class="form-label">Email Address</label>
+        <label class="form-label" for="auth-email">Email Address</label>
         <div class="input-wrapper">
-          <span class="input-icon">📧</span>
-          <input class="form-input" type="email" id="auth-email" placeholder="you@example.com" autocomplete="email" required>
+          <span class="input-icon" aria-hidden="true">📧</span>
+          <input class="form-input" type="email" id="auth-email" placeholder="you@example.com"
+                 autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"
+                 aria-describedby="auth-email-hint" required>
         </div>
       </div>
       <div class="form-group">
@@ -289,7 +293,10 @@ FP.pages.auth = {
         <label class="form-label">Mobile Number</label>
         <div style="display:flex;gap:8px">
           <div style="background:var(--surface-2);border:1.5px solid var(--border);border-radius:12px;padding:14px;font-size:14px;flex-shrink:0;color:var(--text-secondary);display:flex;align-items:center">🇮🇳 +91</div>
-          <input class="form-input" type="tel" id="auth-phone" placeholder="98765 43210" maxlength="10" pattern="[0-9]{10}" inputmode="numeric" style="flex:1">
+          <input class="form-input" type="tel" id="auth-phone" placeholder="98765 43210"
+                 maxlength="10" pattern="[0-9]{10}" inputmode="numeric"
+                 autocomplete="tel-national" aria-label="10-digit mobile number"
+                 style="flex:1">
         </div>
         <div class="form-hint">We'll send a one-time verification code</div>
       </div>
@@ -311,9 +318,11 @@ FP.pages.auth = {
       </div>
 
       <!-- 6-digit OTP inputs -->
-      <div class="otp-group" id="otp-group" style="margin-bottom:8px">
+      <div class="otp-group" id="otp-group" style="margin-bottom:8px" role="group" aria-label="6-digit verification code">
         ${Array(6).fill('').map((_, i) =>
           `<input class="otp-input" type="tel" maxlength="1" id="otp-${i}" inputmode="numeric"
+            aria-label="Digit ${i + 1} of 6"
+            autocomplete="${i === 0 ? 'one-time-code' : 'off'}"
             oninput="FP.pages.auth._otpInput(${i}, this)"
             onkeydown="FP.pages.auth._otpKeyDown(${i}, event, this)">`
         ).join('')}
