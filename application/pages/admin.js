@@ -23,7 +23,7 @@ FP.pages.admin = {
 
         <!-- Tabs -->
         <div style="display:flex;gap:6px;padding:12px 16px;overflow-x:auto;scrollbar-width:none">
-          ${[['overview','Overview'],['users','Users'],['partners','Partners'],['content','Content']].map(([id,l]) => `
+          ${[['overview','Overview'],['members','Members'],['partners','Partners'],['content','Content']].map(([id,l]) => `
             <div class="filter-chip ${this._tab===id?'active':''}" onclick="FP.pages.admin._setTab('${id}')">${l}</div>`).join('')}
         </div>
 

@@ -554,6 +554,233 @@ FP.data.gyms = [
     ],
     tags: ['CrossFit', 'Large Gym', 'Popular'],
     featured: true
+  },
+
+  /* ── G001–G015: Partner Network Gyms ─────────────────────── */
+  {
+    id: 'G001', name: 'Iron Pulse Fitness', type: 'gym',
+    types: ['Gym', 'Strength'],
+    address: 'MP Nagar, Bhopal', city: 'Bhopal',
+    lat: 23.2365, lng: 77.4116, distance: 1.2, rating: 4.5, reviewCount: 134,
+    pricePerSession: 179, tier: 'pro',
+    amenities: ['AC', 'Locker Room', 'Parking', 'Protein Bar'],
+    activityTypes: ['Weight Training', 'Cardio', 'HIIT'],
+    timings: { weekday: '5:30 AM - 10:30 PM', weekend: '6:00 AM - 9:00 PM' },
+    capacity: 60, currentOccupancy: 29, emoji: '⚡',
+    image: null,
+    description: 'Bhopal\'s premier strength-training facility in the heart of MP Nagar with expert certified coaches.',
+    reviews: [{ name: 'Aarav S.', rating: 5, comment: 'Best gym in Bhopal. Great coaches and amazing equipment!', date: '3 days ago' }],
+    tags: ['Strength', 'HIIT', 'Certified Trainers']
+  },
+  {
+    id: 'G002', name: 'FitZone Studio', type: 'gym',
+    types: ['Gym', 'Zumba', 'Aerobics'],
+    address: 'Vijay Nagar, Indore', city: 'Indore',
+    lat: 22.7534, lng: 75.8937, distance: 0.9, rating: 4.3, reviewCount: 88,
+    pricePerSession: 129, tier: 'basic',
+    amenities: ['AC', 'Mirrors', 'Sound System', 'Locker'],
+    activityTypes: ['Zumba', 'Aerobics', 'Weight Training', 'Cardio'],
+    timings: { weekday: '6:00 AM - 9:00 PM', weekend: '7:00 AM - 8:00 PM' },
+    capacity: 45, currentOccupancy: 18, emoji: '🏃',
+    image: null,
+    description: 'Energetic studio gym in Vijay Nagar with high-energy group classes and modern equipment.',
+    reviews: [{ name: 'Priya V.', rating: 4, comment: 'Love the Zumba classes here! Great atmosphere.', date: '1 week ago' }],
+    tags: ['Zumba', 'Group Classes', 'Budget']
+  },
+  {
+    id: 'G003', name: 'Urban Muscle Hub', type: 'gym',
+    types: ['Gym', 'CrossFit', 'Powerlifting'],
+    address: 'Saket, Delhi', city: 'Delhi',
+    lat: 28.5245, lng: 77.2066, distance: 1.1, rating: 4.8, reviewCount: 312,
+    pricePerSession: 349, tier: 'elite',
+    amenities: ['AC', 'Olympic Rig', 'Showers', 'Nutritionist', 'Recovery Room'],
+    activityTypes: ['Powerlifting', 'CrossFit', 'Strength', 'HIIT'],
+    timings: { weekday: '5:00 AM - 11:00 PM', weekend: '5:00 AM - 10:00 PM' },
+    capacity: 50, currentOccupancy: 34, emoji: '🦾',
+    image: null,
+    description: 'Elite training facility in South Delhi with world-class powerlifting setup and nutrition support.',
+    reviews: [{ name: 'Rohan G.', rating: 5, comment: 'Absolutely premium. Worth every rupee!', date: '2 days ago' }],
+    tags: ['Powerlifting', 'Elite', 'Olympic Lifting'], featured: true
+  },
+  {
+    id: 'G004', name: 'FlexFit Gym', type: 'gym',
+    types: ['Gym', 'Cardio', 'HIIT'],
+    address: 'Andheri West, Mumbai', city: 'Mumbai',
+    lat: 19.1341, lng: 72.8271, distance: 0.8, rating: 4.6, reviewCount: 245,
+    pricePerSession: 249, tier: 'pro',
+    amenities: ['AC', 'Locker', 'Shower', 'Smoothie Bar', 'Parking'],
+    activityTypes: ['Weight Training', 'Cardio', 'HIIT', 'Group Classes'],
+    timings: { weekday: '5:30 AM - 11:00 PM', weekend: '6:00 AM - 10:00 PM' },
+    capacity: 65, currentOccupancy: 38, emoji: '💪',
+    image: null,
+    description: 'Andheri\'s go-to gym with state-of-the-art equipment and high-energy group fitness classes.',
+    reviews: [{ name: 'Ananya S.', rating: 5, comment: 'The best gym in Andheri. Super clean and well organised.', date: '4 days ago' }],
+    tags: ['HIIT', 'Group Classes', 'Popular']
+  },
+  {
+    id: 'G005', name: 'PowerHouse Fitness', type: 'gym',
+    types: ['Gym', 'Strength'],
+    address: 'Wakad, Pune', city: 'Pune',
+    lat: 18.5974, lng: 73.7617, distance: 1.4, rating: 4.2, reviewCount: 67,
+    pricePerSession: 119, tier: 'basic',
+    amenities: ['Parking', 'Locker', 'Trainer on Duty'],
+    activityTypes: ['Weight Training', 'Cardio', 'Stretching'],
+    timings: { weekday: '5:30 AM - 10:30 PM', weekend: '6:00 AM - 9:00 PM' },
+    capacity: 55, currentOccupancy: 20, emoji: '🏋️',
+    image: null,
+    description: 'Affordable yet well-equipped gym in Wakad for all fitness levels.',
+    reviews: [{ name: 'Kunal M.', rating: 4, comment: 'Great value for money. Machines are always available.', date: '2 weeks ago' }],
+    tags: ['Budget', 'Strength', 'Beginner Friendly']
+  },
+  {
+    id: 'G006', name: 'Zen Yoga Studio', type: 'yoga',
+    types: ['Yoga', 'Meditation', 'Wellness'],
+    address: 'Whitefield, Bangalore', city: 'Bangalore',
+    lat: 12.9698, lng: 77.7499, distance: 2.1, rating: 4.9, reviewCount: 198,
+    pricePerSession: 299, tier: 'elite',
+    amenities: ['AC', 'Mats & Props', 'Herbal Tea', 'Meditation Pods', 'Showers'],
+    activityTypes: ['Hatha Yoga', 'Vinyasa', 'Kundalini', 'Meditation', 'Pranayama'],
+    timings: { weekday: '6:00 AM - 8:00 PM', weekend: '7:00 AM - 6:00 PM' },
+    capacity: 20, currentOccupancy: 8, emoji: '🧘',
+    image: null,
+    description: 'Whitefield\'s most serene yoga retreat with Mysore-trained instructors and private meditation pods.',
+    reviews: [{ name: 'Sneha I.', rating: 5, comment: 'Absolute peace and tranquility. The kundalini class changed my life.', date: '5 days ago' }],
+    tags: ['Kundalini', 'Meditation', 'Premium'], featured: true
+  },
+  {
+    id: 'G007', name: 'Beast Mode Gym', type: 'gym',
+    types: ['Gym', 'CrossFit', 'MMA'],
+    address: 'Kolar Road, Bhopal', city: 'Bhopal',
+    lat: 23.1765, lng: 77.4522, distance: 2.8, rating: 4.5, reviewCount: 112,
+    pricePerSession: 199, tier: 'pro',
+    amenities: ['AC', 'CrossFit Rig', 'Boxing Bags', 'Locker Room'],
+    activityTypes: ['CrossFit', 'MMA', 'Strength', 'Conditioning'],
+    timings: { weekday: '5:00 AM - 10:30 PM', weekend: '5:30 AM - 9:00 PM' },
+    capacity: 40, currentOccupancy: 22, emoji: '🥊',
+    image: null,
+    description: 'Bhopal\'s toughest gym. Where champions are built — CrossFit, MMA, and heavy lifting.',
+    reviews: [{ name: 'Rahul Y.', rating: 5, comment: 'Intense! Exactly what I needed to push my limits.', date: '1 week ago' }],
+    tags: ['CrossFit', 'MMA', 'Intense Training']
+  },
+  {
+    id: 'G008', name: 'Core Fitness Club', type: 'gym',
+    types: ['Gym', 'Pilates', 'Cardio'],
+    address: 'Malviya Nagar, Jaipur', city: 'Jaipur',
+    lat: 26.8521, lng: 75.8078, distance: 1.0, rating: 4.1, reviewCount: 54,
+    pricePerSession: 109, tier: 'basic',
+    amenities: ['AC', 'Locker', 'Trainer'],
+    activityTypes: ['Cardio', 'Core Training', 'Pilates', 'Zumba'],
+    timings: { weekday: '6:00 AM - 9:30 PM', weekend: '7:00 AM - 8:00 PM' },
+    capacity: 40, currentOccupancy: 14, emoji: '🌀',
+    image: null,
+    description: 'Jaipur\'s friendly community gym with affordable plans and group fitness classes.',
+    reviews: [{ name: 'Neha J.', rating: 4, comment: 'Friendly staff. Clean and great for beginners.', date: '3 weeks ago' }],
+    tags: ['Beginner Friendly', 'Pilates', 'Affordable']
+  },
+  {
+    id: 'G009', name: 'Titan Gym', type: 'gym',
+    types: ['Gym', 'Strength', 'Powerlifting'],
+    address: 'Sector 17, Chandigarh', city: 'Chandigarh',
+    lat: 30.7414, lng: 76.7682, distance: 0.5, rating: 4.8, reviewCount: 189,
+    pricePerSession: 299, tier: 'elite',
+    amenities: ['AC', 'Olympic Weights', 'Showers', 'Cafeteria', 'Parking'],
+    activityTypes: ['Powerlifting', 'Bodybuilding', 'Strength', 'HIIT'],
+    timings: { weekday: '5:00 AM - 11:00 PM', weekend: '5:00 AM - 10:00 PM' },
+    capacity: 60, currentOccupancy: 41, emoji: '🏆',
+    image: null,
+    description: 'Chandigarh\'s most decorated gym. Home to IPL athletes and national-level bodybuilders.',
+    reviews: [{ name: 'Aditya K.', rating: 5, comment: 'The best gym in Chandigarh. Period.', date: '2 days ago' }],
+    tags: ['Powerlifting', 'Bodybuilding', 'Elite'], featured: true
+  },
+  {
+    id: 'G010', name: 'FitHub Arena', type: 'gym',
+    types: ['Gym', 'Cardio', 'Sports'],
+    address: 'Model Town, Ludhiana', city: 'Ludhiana',
+    lat: 30.9010, lng: 75.8573, distance: 1.3, rating: 4.5, reviewCount: 97,
+    pricePerSession: 199, tier: 'pro',
+    amenities: ['AC', 'Sports Ground', 'Gym', 'Locker', 'Protein Bar'],
+    activityTypes: ['Weight Training', 'Cardio', 'Basketball', 'HIIT'],
+    timings: { weekday: '5:30 AM - 10:30 PM', weekend: '6:00 AM - 9:00 PM' },
+    capacity: 70, currentOccupancy: 35, emoji: '🏟️',
+    image: null,
+    description: 'Ludhiana\'s largest multi-activity fitness hub with gym, sports courts, and group classes.',
+    reviews: [{ name: 'Simran K.', rating: 5, comment: 'Love that I can do gym AND sports here. Amazing value!', date: '1 week ago' }],
+    tags: ['Multi-Sport', 'Pro Plan', 'Large Facility']
+  },
+  {
+    id: 'G011', name: 'Muscle Factory', type: 'gym',
+    types: ['Gym', 'Bodybuilding'],
+    address: 'Satellite, Ahmedabad', city: 'Ahmedabad',
+    lat: 23.0258, lng: 72.5090, distance: 1.7, rating: 4.2, reviewCount: 73,
+    pricePerSession: 129, tier: 'basic',
+    amenities: ['AC', 'Locker', 'Trainer', 'Parking'],
+    activityTypes: ['Bodybuilding', 'Weight Training', 'Cardio'],
+    timings: { weekday: '5:30 AM - 10:30 PM', weekend: '6:00 AM - 9:00 PM' },
+    capacity: 55, currentOccupancy: 21, emoji: '💪',
+    image: null,
+    description: 'Ahmedabad\'s bodybuilding-focused gym with expert trainers and a strong community.',
+    reviews: [{ name: 'Vikram D.', rating: 4, comment: 'Great for bodybuilding. Coaches know their stuff.', date: '2 weeks ago' }],
+    tags: ['Bodybuilding', 'Strength', 'Budget']
+  },
+  {
+    id: 'G012', name: 'Elite Fitness Pro', type: 'gym',
+    types: ['Gym', 'Wellness', 'Functional'],
+    address: 'Arera Colony, Bhopal', city: 'Bhopal',
+    lat: 23.2189, lng: 77.4304, distance: 0.7, rating: 4.8, reviewCount: 167,
+    pricePerSession: 349, tier: 'elite',
+    amenities: ['AC', 'Premium Equipment', 'Sauna', 'Nutritionist', 'Recovery Zone'],
+    activityTypes: ['Functional Fitness', 'Strength', 'Group PT', 'Wellness'],
+    timings: { weekday: '5:00 AM - 11:00 PM', weekend: '5:30 AM - 10:00 PM' },
+    capacity: 45, currentOccupancy: 30, emoji: '🎯',
+    image: null,
+    description: 'Bhopal\'s most premium gym — elite equipment, nutrition counseling, and personalized training programs.',
+    reviews: [{ name: 'Pooja C.', rating: 5, comment: 'Worth every penny. The personalized training plans are exceptional!', date: '3 days ago' }],
+    tags: ['Premium', 'Personalized Training', 'Nutrition'], featured: true
+  },
+  {
+    id: 'G013', name: 'Sweat & Burn', type: 'gym',
+    types: ['Gym', 'HIIT', 'CrossFit'],
+    address: 'Banjara Hills, Hyderabad', city: 'Hyderabad',
+    lat: 17.4149, lng: 78.4476, distance: 1.5, rating: 4.5, reviewCount: 143,
+    pricePerSession: 199, tier: 'pro',
+    amenities: ['AC', 'CrossFit Rig', 'Battle Ropes', 'Shower', 'Supplements'],
+    activityTypes: ['HIIT', 'CrossFit', 'Strength', 'Conditioning'],
+    timings: { weekday: '5:30 AM - 10:30 PM', weekend: '6:00 AM - 9:00 PM' },
+    capacity: 35, currentOccupancy: 19, emoji: '🔥',
+    image: null,
+    description: 'High-intensity training hub in Banjara Hills — where every session is a challenge.',
+    reviews: [{ name: 'Aman K.', rating: 5, comment: 'Grueling workouts with amazing coaches. Lost 8 kgs in 2 months!', date: '5 days ago' }],
+    tags: ['HIIT', 'CrossFit', 'Weight Loss']
+  },
+  {
+    id: 'G014', name: 'Alpha Fitness Club', type: 'gym',
+    types: ['Gym', 'Cardio', 'Yoga'],
+    address: 'Kakkanad, Kochi', city: 'Kochi',
+    lat: 10.0159, lng: 76.2987, distance: 2.4, rating: 4.0, reviewCount: 45,
+    pricePerSession: 99, tier: 'basic',
+    amenities: ['AC', 'Locker', 'Trainer', 'Yoga Space'],
+    activityTypes: ['Weight Training', 'Cardio', 'Yoga', 'Stretching'],
+    timings: { weekday: '6:00 AM - 9:00 PM', weekend: '7:00 AM - 7:00 PM' },
+    capacity: 40, currentOccupancy: 12, emoji: '⭐',
+    image: null,
+    description: 'Kochi\'s friendly neighborhood gym with affordable plans and a welcoming community.',
+    reviews: [{ name: 'Kavya N.', rating: 4, comment: 'Good for beginners. Staff is very helpful and encouraging.', date: '1 month ago' }],
+    tags: ['Beginner Friendly', 'Yoga', 'Affordable']
+  },
+  {
+    id: 'G015', name: 'Grind Fitness', type: 'gym',
+    types: ['Gym', 'Strength', 'HIIT'],
+    address: 'Gomti Nagar, Lucknow', city: 'Lucknow',
+    lat: 26.8627, lng: 80.9976, distance: 1.0, rating: 4.6, reviewCount: 128,
+    pricePerSession: 229, tier: 'elite',
+    amenities: ['AC', 'Olympic Weights', 'Cardio Zone', 'Shower', 'Locker'],
+    activityTypes: ['Strength', 'HIIT', 'Bodybuilding', 'Cardio'],
+    timings: { weekday: '5:00 AM - 11:00 PM', weekend: '5:30 AM - 10:00 PM' },
+    capacity: 50, currentOccupancy: 28, emoji: '💥',
+    image: null,
+    description: 'Lucknow\'s elite gym in Gomti Nagar — premium equipment and results-driven training programs.',
+    reviews: [{ name: 'Sarthak M.', rating: 5, comment: 'Best gym in Lucknow by far. Love the energy here!', date: '4 days ago' }],
+    tags: ['Strength', 'Elite', 'Bodybuilding']
   }
 ];
 
@@ -632,4 +859,49 @@ FP.data.generateSlots = function(date) {
     });
   });
   return slots;
+};
+
+/* ============================================================
+   MEMBERS DATASET  (G001–G015 network)
+   ============================================================ */
+FP.data.members = [
+  { id:'M001', gymId:'G001', gymName:'Iron Pulse Fitness',  name:'Aarav Sharma',    city:'Bhopal',      area:'MP Nagar',       plan:'pro',   checkInsMonth:18, joinDate:'2025-11-10' },
+  { id:'M002', gymId:'G002', gymName:'FitZone Studio',      name:'Priya Verma',     city:'Indore',      area:'Vijay Nagar',    plan:'basic', checkInsMonth:12, joinDate:'2025-12-03' },
+  { id:'M003', gymId:'G003', gymName:'Urban Muscle Hub',    name:'Rohan Gupta',     city:'Delhi',       area:'Saket',          plan:'elite', checkInsMonth:25, joinDate:'2025-10-22' },
+  { id:'M004', gymId:'G004', gymName:'FlexFit Gym',         name:'Ananya Singh',    city:'Mumbai',      area:'Andheri West',   plan:'pro',   checkInsMonth:20, joinDate:'2025-09-15' },
+  { id:'M005', gymId:'G005', gymName:'PowerHouse Fitness',  name:'Kunal Mehta',     city:'Pune',        area:'Wakad',          plan:'basic', checkInsMonth:10, joinDate:'2026-01-07' },
+  { id:'M006', gymId:'G006', gymName:'Zen Yoga Studio',     name:'Sneha Iyer',      city:'Bangalore',   area:'Whitefield',     plan:'elite', checkInsMonth:22, joinDate:'2025-08-19' },
+  { id:'M007', gymId:'G007', gymName:'Beast Mode Gym',      name:'Rahul Yadav',     city:'Bhopal',      area:'Kolar Road',     plan:'pro',   checkInsMonth:17, joinDate:'2025-11-30' },
+  { id:'M008', gymId:'G008', gymName:'Core Fitness Club',   name:'Neha Jain',       city:'Jaipur',      area:'Malviya Nagar',  plan:'basic', checkInsMonth:9,  joinDate:'2026-02-14' },
+  { id:'M009', gymId:'G009', gymName:'Titan Gym',           name:'Aditya Kapoor',   city:'Chandigarh',  area:'Sector 17',      plan:'elite', checkInsMonth:26, joinDate:'2025-07-05' },
+  { id:'M010', gymId:'G010', gymName:'FitHub Arena',        name:'Simran Kaur',     city:'Ludhiana',    area:'Model Town',     plan:'pro',   checkInsMonth:19, joinDate:'2025-10-11' },
+  { id:'M011', gymId:'G011', gymName:'Muscle Factory',      name:'Vikram Desai',    city:'Ahmedabad',   area:'Satellite',      plan:'basic', checkInsMonth:11, joinDate:'2026-01-28' },
+  { id:'M012', gymId:'G012', gymName:'Elite Fitness Pro',   name:'Pooja Choudhary', city:'Bhopal',      area:'Arera Colony',   plan:'elite', checkInsMonth:24, joinDate:'2025-09-02' },
+  { id:'M013', gymId:'G013', gymName:'Sweat & Burn',        name:'Aman Khan',       city:'Hyderabad',   area:'Banjara Hills',  plan:'pro',   checkInsMonth:16, joinDate:'2025-12-17' },
+  { id:'M014', gymId:'G014', gymName:'Alpha Fitness Club',  name:'Kavya Nair',      city:'Kochi',       area:'Kakkanad',       plan:'basic', checkInsMonth:8,  joinDate:'2026-03-01' },
+  { id:'M015', gymId:'G015', gymName:'Grind Fitness',       name:'Sarthak Mishra',  city:'Lucknow',     area:'Gomti Nagar',    plan:'elite', checkInsMonth:21, joinDate:'2025-11-25' },
+];
+
+/* Members helpers */
+FP.data.getMembersByPlan = function(plan) {
+  return FP.data.members.filter(m => m.plan === plan);
+};
+
+FP.data.getMembersByCity = function(city) {
+  return FP.data.members.filter(m => m.city.toLowerCase() === city.toLowerCase());
+};
+
+FP.data.getMemberLeaderboard = function() {
+  return [...FP.data.members].sort((a, b) => b.checkInsMonth - a.checkInsMonth);
+};
+
+FP.data.getMemberStats = function() {
+  const total   = FP.data.members.length;
+  const elite   = FP.data.members.filter(m => m.plan === 'elite').length;
+  const pro     = FP.data.members.filter(m => m.plan === 'pro').length;
+  const basic   = FP.data.members.filter(m => m.plan === 'basic').length;
+  const totalCI = FP.data.members.reduce((s, m) => s + m.checkInsMonth, 0);
+  const avgCI   = (totalCI / total).toFixed(1);
+  const cities  = [...new Set(FP.data.members.map(m => m.city))];
+  return { total, elite, pro, basic, totalCheckIns: totalCI, avgCheckIns: avgCI, cities: cities.length };
 };
